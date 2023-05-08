@@ -4,23 +4,25 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git 'https://github.com/kayanifaisal1/simple-java-maven-app.git/'
+        git 'https://github.com/kayanifaisal1/simple-java-maven-app.git'
       }
     }
     
     stage('Build') {
       steps {
-        withMaven(maven: 'maven_3_9_1') {
-          sh 'mvn clean package'
-        }
+        powershell 'mvn clean package'
       }
     }
     
     stage('Test') {
       steps {
-        withMaven(maven: 'maven_3_9_1') {
-          sh 'mvn test'
-        }
+        powershell 'mvn test'
+      }
+    }
+    
+    stage('Deliver') {
+      steps {
+        powershell './jenkins/scripts/deliver.sh'
       }
     }
   }
